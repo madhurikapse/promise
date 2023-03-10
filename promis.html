@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 style="color: red; margin-left: 500px; font-size: larger;">Promise & asycn</h1>
+    <p>Q1.Write one example explaining how you can write a callback function.</p>
+    <fieldset>
+        <pre style="color: blue;">Ans:
+         function greet(name, callback) {
+    console.log('Hi' + ' ' + name);
+    callback();
+}
+
+// callback function
+function callMe() {
+    console.log('I am callback function');
+}
+
+// passing function as an argument
+greet('sulekha', callMe);
+
+output:Hi sulekha
+I am callback function
+
+        </pre>
+    </fieldset>
+    <p>Q2. "Write a callback function to print numbers from 1 to 7, in which 1 should be printed after 1 sec, 2 should be printed after 2 sec, 3 should be printed after 3 sec, and so on. 
+
+Explain callback hell.
+Numbers
+1
+2
+3
+4
+5
+6
+7"</p>
+<fieldset>
+    <pre style="color: blue;">Ans:
+        setTimeout(() => {
+            let count=1;
+              console.log(count++);
+              setTimeout(() => {
+                console.log(count++);
+                setTimeout(() => {
+                  console.log(count++);
+                    setTimeout(() => {
+                      console.log(count++);
+                        setTimeout(() =>{
+                          console.log(count++);
+                            setTimeout(() =>{
+                              console.log(count++);
+                                setTimeout(() =>{
+                                  console.log(count++);
+                                },7000)
+                            },6000)
+                        },5000)
+                    },4000);
+                },3000);
+            },2000);
+          },1000);
+
+
+
+output:
+1 (After 1 sec)
+
+2 (After 2 sec)
+
+3 (After 3 sec)
+
+4 (After 4 sec)
+
+5 (After 5 sec)
+
+6 (After 6 sec)
+
+7 (After 7 sec)
+    </pre>
+</fieldset>
+<p>Q3."Write the promise function to print numbers from 1 to 7, in which 1 should be printed after 1 sec, 2 should be printed after 2 sec, 3 should be printed after 3 sec, and so on. 
+
+Numbers
+1
+2
+3
+4
+5
+6
+7"</p>
+<fieldset>
+    <pre style="color: blue;">
+        const printNumberPromise = ms => new Promise(resolve => setTimeout(resolve, ms)); 
+        let chain = Promise.resolve(); 
+        for (let count = 1; count <= 7; count++) { 
+          chain = chain.then(() => { 
+            console.log(count); 
+            return printNumberPromise(count*1000); 
+          }); 
+        }
+
+output:
+1 (After 1 sec)
+
+2 (After 2 sec)
+
+3 (After 3 sec)
+
+4 (After 4 sec)
+
+5 (After 5 sec)
+
+6 (After 6 sec)
+
+7 (After 7 sec)
+    </pre>
+</fieldset>
+<P>Q4:"Create a promise function accepting an argument, if yes is passed to the function then it should go to
+    resolved state and print Promise Resolved, and if nothing is passed then it should go to reject the state and
+    catch the error and print Promise Rejected "</P>
+    <fieldset>
+        <pre style="color: blue;">
+            const promise = new Promise(function(res,rej){
+                let result="";
+                if(result == "yes"){
+                  res("promise resolved");
+                }
+                else{
+                  rej("promise rejected");
+                }
+              })
+
+              promise.then(function(data){
+                console.log(data);
+              }).catch(function(err){
+                console.log("Error",err);
+              })
+
+              OUTPUT:"Error" "promise rejected"
+        </pre>
+    </fieldset>
+
+    <P>Q5:Create examples to explain callback function</P>
+    <fieldset>
+        <PRE style="color: blue;">
+            const mainFunction = (callback) => {
+                setTimeout(() => {
+                  callback([2, 2, 4]);
+                }, 2000)
+              }
+
+              const add = (array) => {
+                let sum = 0;
+                for(let i of array) {
+                  sum += i;
+                }
+                console.log(sum);
+              }
+
+               mainFunction(add);
+
+               OUTPUT:8
+        </PRE>
+    </fieldset>
+    <P>Q6:<h4> Create examples to explain callback hell functio</h4>
+        Callback Hell: Callback Hell is essentially nested callbacks stacked below one another forming a pyramid
+            structure. Every callback depends/waits for the previous callback, thereby making a pyramid structure that
+            affects the readability and maintainability of the code.</P>
+            <fieldset>
+            <PRE style="color: blue;">
+                setTimeout(() => {
+                    console.log("Hey,")
+                    setTimeout(() => {
+                      console.log("Are");
+                      setTimeout(() =>{
+                        console.log("YOU");
+                        setTimeout(() => {
+                          console.log("There");
+
+
+                        },4000)
+                      },3000)
+                    },2000)
+                  },1000)
+
+                  output:
+                  "Hey," (After 1 sec)
+
+                  "Are" (After 2 sec)
+
+                  "YOU" (After 3 sec)
+
+                "There" (After 4 sec)
+                </PRE>
+        </fieldset>
+
+        <p>Q7: Create examples to explain promises function</p>
+        <fieldset>
+            <pre style="color: blue;">
+                const promise = new Promise(function(res,rej){
+                    let num=7;
+                    if(num%2 == 0){
+                      res("its even");
+                    }
+                    else{
+                      rej("its not even");
+                    }
+                  })
+
+                  promise.then(function(data){
+                    console.log(data);
+                  }).catch(function(err){
+                    console.log("Error",err);
+                  })
+
+             output:"Error" "its not even"        
+            </pre>
+        </fieldset>
+
+        <p>Q8:<H4>Create examples to explain async await function</H4>
+        </p>
+        <fieldset>
+            <pre style="color: blue;">
+                function resolveAfter2Seconds() {
+                    return new Promise(resolve => {
+                      setTimeout(() => {
+                        resolve('resolved');
+                      }, 2000);
+                    });
+                  }
+
+                  async function asyncCall() {
+                    console.log('calling');
+                    const result = await resolveAfter2Seconds();
+                    console.log(result);
+
+                  }
+
+                  asyncCall();
+
+             Output:
+             "calling"
+             "resolved"
+
+            </pre>
+        </fieldset>
+
+        <p>Q9: <h4>Create examples to explain promise.all function</h4>
+            <p>The Promise.all() method takes an iterable of promises as input and returns a single Promise. This returned
+                promise fulfills when all of the input's promises fulfill (including when an empty iterable is passed), with an
+                array of the fulfillment values. It rejects when any of the input's promises rejects, with this first rejection
+                reason.</p>
+                <fieldset>
+                    <pre style="color: blue;">
+                        const promise1 = Promise.resolve(2);
+                        const promise2 = 45;
+                        const promise3 = new Promise((resolve, reject) => {
+                          setTimeout(resolve, 100, 'foo');
+                        });
+
+                        Promise.all([promise1, promise2, promise3]).then((values) => {
+                          console.log(values);
+                        });
+
+                        output:// [object Array] (3)
+                        [2,45,"foo"]
+
+
+                    </pre>
+                </fieldset>
+
+</body>
+</html>
